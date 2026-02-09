@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Encuesta Adolescente | ConCiencia Emocional Digital</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root {
+    --azul-claro: #4fa3b7;
+    --azul-medio: #2f6f85;
+    --azul-oscuro: #1e3a4f;
+    --fondo: #eef5f6;
+    --blanco: #ffffff;
+    --gris: #e5e7eb;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    background: var(--fondo);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background: linear-gradient(135deg, var(--azul-claro), var(--azul-medio));
+    color: white;
+    padding: 1.2rem;
+    text-align: center;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.container {
+    width: 100%;
+    max-width: 760px;
+    height: 540px;
+    background: var(--blanco);
+    border-radius: 26px;
+    box-shadow: 0 20px 35px rgba(0,0,0,0.15);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===== PROGRESO ===== */
+.progress-bar {
+    height: 10px;
+    background: var(--gris);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 1.6rem;
+}
+
+.progress {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--azul-claro), var(--azul-medio));
+    transition: width 0.4s ease;
+}
+
+/* ===== CONTENIDO ===== */
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.fade-out {
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+.hidden {
+    display: none;
+}
+
+h2 { color: var(--azul-oscuro); }
+
+/* ===== RESPUESTAS ===== */
+.answers {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.answer {
+    background: #f8fbfc;
+    border-radius: 18px;
+    padding: 1.4rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.answer:hover {
+    background: var(--azul-claro);
+    color: white;
+}
+
+/* ===== RESULTADOS ===== */
+canvas {
+    margin: 1rem auto;
+    display: block;
+}
+
+/* ===== LEYENDA ===== */
+.legend {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px,1fr));
+    gap: 0.6rem;
+    margin-top: 0.8rem;
+    font-size: 0.9rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.color-box {
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+}
+
+button {
+    background: var(--azul-medio);
+    color: white;
+    border: none;
+    padding: 1rem 1.6rem;
+    border-radius: 14px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 1.2rem;
+}
+
+button:hover {
+    background: var(--azul-oscuro);
+}
+
+footer {
+    background: var(--gris);
+    text-align: center;
+    padding: 0.8rem;
+    font-size: 0.85rem;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h2>ConCiencia Emocional Digital</h2>
+    <p>Encuesta emocional · Adolescente</p>
+</header>
+
+<main>
+<div class="container">
+
+    <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+    </div>
+
+    <div class="content" id="quiz">
+        <h2 id="question"></h2>
+        <div class="answers">
+            <div class="answer" onclick="answer(1)">Nunca</div>
+            <div class="answer" onclick="answer(2)">Rara vez</div>
+            <div class="answer" onclick="answer(3)">A veces</div>
+            <div class="answer" onclick="answer(4)">Frecuentemente</div>
+            <div class="answer" onclick="answer(5)">Siempre</div>
+        </div>
+    </div>
+
+    <div class="content hidden" id="result">
+        <h2>Resultado emocional</h2>
+        <p id="explanation"></p>
+
+        <!-- CANVAS MÁS PEQUEÑO -->
+        <canvas id="chart" width="220" height="220"></canvas>
+
+        <div class="legend" id="legend"></div>
+
+        <button id="videoBtn">Ver video explicativo</button>
+    </div>
+
+</div>
+</main>
+
+<footer>
+    © 2026 ConCiencia Emocional Digital
+</footer>
+
+<script>
+const questions = [
+ { text:"Me siento nervioso/a o preocupado/a sin saber exactamente por qué.", emotion:"Ansiedad" },
+ { text:"Siento que algo malo va a pasar aunque no tenga razones claras.", emotion:"Ansiedad" },
+ { text:"Me siento desanimado/a o sin ganas de hacer cosas que antes disfrutaba.", emotion:"Tristeza" },
+ { text:"Siento ganas de llorar o me siento vacío/a con frecuencia.", emotion:"Tristeza" },
+ { text:"Me enojo fácilmente cuando algo no sale como quiero.", emotion:"Ira" },
+ { text:"Me frustro cuando siento que no me entienden.", emotion:"Ira" },
+ { text:"Me preocupa mucho lo que los demás piensen de mí.", emotion:"Miedo" },
+ { text:"Evito hacer cosas por miedo a equivocarme.", emotion:"Miedo" },
+ { text:"Me siento tranquilo/a y en paz conmigo mismo/a.", emotion:"Bienestar", invert:true },
+ { text:"Siento que puedo manejar mis emociones cuando algo me molesta.", emotion:"Bienestar", invert:true }
+];
+
+const colors = {
+    Ansiedad:"#4fa3b7",
+    Tristeza:"#6bbcd1",
+    Ira:"#f3b562",
+    Miedo:"#e76f51",
+    Bienestar:"#8ab17d"
+};
+
+let index = 0;
+let scores = { Ansiedad:0, Tristeza:0, Ira:0, Miedo:0, Bienestar:0 };
+
+const questionEl = document.getElementById("question");
+const quizEl = document.getElementById("quiz");
+const resultEl = document.getElementById("result");
+const progressEl = document.getElementById("progress");
+
+function loadQuestion() {
+    questionEl.textContent = questions[index].text;
+    progressEl.style.width = (index / questions.length) * 100 + "%";
+}
+
+function answer(value) {
+    let q = questions[index];
+    scores[q.emotion] += q.invert ? (6 - value) : value;
+    index++;
+    index < questions.length ? loadQuestion() : showResult();
+}
+
+function showResult() {
+    quizEl.classList.add("hidden");
+    resultEl.classList.remove("hidden");
+    progressEl.style.width = "100%";
+
+    const total = Object.values(scores).reduce((a,b)=>a+b,0);
+    const dominant = Object.entries(scores).sort((a,b)=>b[1]-a[1])[0][0];
+
+    document.getElementById("explanation").innerHTML =
+    `La emoción con la que se necesita más trabajar es <strong>${dominant}</strong>.
+     A continuación puedes ver cómo se distribuyen tus emociones.`;
+
+    drawChart(total);
+    createLegend(total);
+}
+
+function drawChart(total) {
+    const ctx = document.getElementById("chart").getContext("2d");
+    let start = 0;
+
+    Object.entries(scores).forEach(([emotion,value])=>{
+        const angle = (value / total) * Math.PI * 2;
+        ctx.beginPath();
+        ctx.moveTo(110,110);
+        ctx.arc(110,110,90,start,start+angle);
+        ctx.fillStyle = colors[emotion];
+        ctx.fill();
+        start += angle;
+    });
+}
+
+function formatPercent(num) {
+    return Number.isInteger(num) ? `${num}%` : `${num.toFixed(1)}%`;
+}
+
+function createLegend(total) {
+    const legend = document.getElementById("legend");
+    legend.innerHTML = "";
+    Object.entries(scores).forEach(([emotion,value])=>{
+        const percent = (value / total) * 100;
+        legend.innerHTML += `
+        <div class="legend-item">
+            <div class="color-box" style="background:${colors[emotion]}"></div>
+            <span>${emotion}: ${formatPercent(percent)}</span>
+        </div>`;
+    });
+}
+
+loadQuestion();
+</script>
+
+</body>
+</html>

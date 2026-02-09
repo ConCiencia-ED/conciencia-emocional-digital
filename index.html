@@ -3,17 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>ConCiencia Emocional Digital</title>
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- ================= ESTILOS ================= -->
     <style>
         :root {
-            /* Paleta basada en la imagen */
             --fondo-general: #eef5f6;
-            --azul-principal: #4fa3b7;     /* Azul verdoso */
-            --azul-secundario: #2f6f85;    /* Azul más profundo */
+            --azul-principal: #4fa3b7;
+            --azul-secundario: #2f6f85;
             --azul-marino: #1e3a4f;
-            --acento-coral: #f28b82;
             --blanco: #ffffff;
             --gris-footer: #e5e7eb;
             --texto-principal: #1f2933;
@@ -36,25 +34,15 @@
         /* ================= HEADER ================= */
 
         header {
-            background: linear-gradient(
-                135deg,
-                var(--azul-principal),
-                var(--azul-secundario)
-            );
+            background: linear-gradient(135deg, var(--azul-principal), var(--azul-secundario));
+            padding: 1.6rem 2rem;
             color: var(--blanco);
-            padding: 1.2rem 2rem;
         }
 
         .header-content {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .project-name {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             font-weight: 600;
         }
 
@@ -65,83 +53,69 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem 1rem;
+            padding: 3rem 1.5rem;
         }
 
         section {
             text-align: center;
-            max-width: 900px;
+            max-width: 1100px;
             width: 100%;
         }
 
         h1 {
-            font-size: 2.8rem;
-            margin-bottom: 0.5rem;
+            font-size: 3.4rem;
             color: var(--azul-marino);
+            margin-bottom: 0.8rem;
         }
 
         .subtitle {
-            font-size: 1.1rem;
+            font-size: 1.25rem;
             color: #4b6b77;
-            margin-bottom: 3rem;
+            margin-bottom: 3.5rem;
         }
 
-        /* ================= MENÚ TIPO TABLET ================= */
+        /* ================= MENÚ PRINCIPAL ================= */
 
         .menu-tablet {
             display: flex;
-            gap: 2rem;
+            gap: 3rem;
             justify-content: center;
             flex-wrap: wrap;
         }
 
         .menu-item {
             background-color: var(--blanco);
-            width: 200px;
-            padding: 1.8rem 1.2rem;
-            border-radius: 20px;
+            width: 280px;
+            padding: 2.6rem 2rem;
+            border-radius: 26px;
             text-decoration: none;
             color: inherit;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 18px 30px rgba(0,0,0,0.12);
             transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
 
         .menu-item:hover,
         .menu-item:focus {
-            transform: translateY(-6px);
-            box-shadow: 0 16px 30px rgba(0,0,0,0.12);
+            transform: translateY(-8px);
+            box-shadow: 0 26px 45px rgba(0,0,0,0.18);
             outline: none;
         }
 
-        /* Icono simulado (estilo app) */
         .icon {
-            width: 64px;
-            height: 64px;
-            margin: 0 auto 1rem auto;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            color: var(--blanco);
-        }
-
-        .icon.encuesta {
-            background-color: var(--azul-principal);
-        }
-
-        .icon.ayuda {
-            background-color: var(--acento-coral);
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 1.4rem;
+            fill: var(--azul-principal);
         }
 
         .menu-item h2 {
-            margin: 0 0 0.4rem 0;
-            font-size: 1.3rem;
+            font-size: 1.7rem;
+            margin: 0 0 0.6rem;
             color: var(--azul-marino);
         }
 
         .menu-item p {
-            font-size: 0.95rem;
+            font-size: 1.05rem;
             color: #425e68;
             margin: 0;
         }
@@ -151,16 +125,16 @@
         footer {
             background-color: var(--gris-footer);
             text-align: center;
-            padding: 1rem;
+            padding: 1.2rem;
             font-size: 0.9rem;
             color: #4b5563;
         }
 
         /* ================= RESPONSIVE ================= */
 
-        @media (max-width: 600px) {
+        @media (max-width: 700px) {
             h1 {
-                font-size: 2.2rem;
+                font-size: 2.5rem;
             }
 
             .menu-tablet {
@@ -170,11 +144,7 @@
 
             .menu-item {
                 width: 100%;
-                max-width: 320px;
-            }
-
-            .header-content {
-                justify-content: center;
+                max-width: 360px;
             }
         }
     </style>
@@ -182,47 +152,47 @@
 
 <body>
 
-    <!-- ================= HEADER ================= -->
-    <header>
-        <div class="header-content">
-            <div class="project-name">ConCiencia Emocional Digital</div>
+<!-- ================= HEADER ================= -->
+<header>
+    <div class="header-content">
+        ConCiencia Emocional Digital
+    </div>
+</header>
+
+<!-- ================= MAIN ================= -->
+<main>
+    <section>
+        <h1>EmocionaTec</h1>
+        <p class="subtitle">Exploración emocional asistida por tecnología</p>
+
+        <div class="menu-tablet">
+
+            <!-- ENCUESTA -->
+            <a href="encuesta.html" class="menu-item" role="button" aria-label="Encuesta emocional">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 2a5 5 0 015 5v3a5 5 0 01-10 0V7a5 5 0 015-5zm-7 20v-2c0-3.3 6.7-5 7-5s7 1.7 7 5v2H5z"/>
+                </svg>
+                <h2>Encuesta</h2>
+                <p>Explora cómo te sientes</p>
+            </a>
+
+            <!-- AYUDA -->
+            <a href="#" class="menu-item" role="button" aria-label="Ayuda emocional">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 21s-6-4.35-9-7.35C-1.5 9 3 3 7.5 6c1.5 1 2.5 2.5 4.5 4.5C14 8.5 15 7 16.5 6 21 3 25.5 9 21 13.65 18 16.65 12 21 12 21z"/>
+                </svg>
+                <h2>Ayuda</h2>
+                <p>Recibe orientación emocional</p>
+            </a>
+
         </div>
-    </header>
+    </section>
+</main>
 
-    <!-- ================= MAIN ================= -->
-    <main>
-        <section aria-labelledby="titulo-principal">
-            <h1 id="titulo-principal">ConCiencia</h1>
-            <p class="subtitle">Exploración emocional asistida por tecnología</p>
-
-            <div class="menu-tablet">
-                <!-- 
-                    MENÚ: ENCUESTA
-                    Aquí se integrará el sistema de encuestas emocionales
-                -->
-                <a href="#" class="menu-item" role="button" aria-label="Encuesta emocional">
-                    <div class="icon encuesta">🧠</div>
-                    <h2>Encuesta</h2>
-                    <p>Explora cómo te sientes</p>
-                </a>
-
-                <!-- 
-                    MENÚ: AYUDA
-                    Aquí se integrará el asistente emocional
-                -->
-                <a href="#" class="menu-item" role="button" aria-label="Ayuda emocional">
-                    <div class="icon ayuda">❤️</div>
-                    <h2>Ayuda</h2>
-                    <p>Recibe orientación emocional</p>
-                </a>
-            </div>
-        </section>
-    </main>
-
-    <!-- ================= FOOTER ================= -->
-    <footer>
-        © 2026 ConCiencia Emocional Digital · Prototipo educativo
-    </footer>
+<!-- ================= FOOTER ================= -->
+<footer>
+    © 2026 ConCiencia Emocional Digital · Prototipo educativo
+</footer>
 
 </body>
 </html>
